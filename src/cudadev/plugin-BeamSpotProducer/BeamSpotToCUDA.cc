@@ -28,13 +28,13 @@ private:
 };
 
 BeamSpotToCUDA::BeamSpotToCUDA(edm::ProductRegistry& reg)
-  :   //beamSpotPODToken_{reg.consumes<BeamSpotPOD>()},
+  :   beamSpotPODToken_{reg.consumes<BeamSpotPOD>()},
       bsPutToken_{reg.produces<cms::cuda::Product<BeamSpotCUDA>>()},
       bsHost{cms::cuda::make_host_noncached_unique<BeamSpotPOD>(cudaHostAllocWriteCombined)} {}
 
 void BeamSpotToCUDA::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
-  *bsHost = iSetup.get<BeamSpotPOD>();
-  //*bsHost = iEvent.get(beamSpotPODToken_);
+  //*bsHost = iSetup.get<BeamSpotPOD>();
+  *bsHost = iEvent.get(beamSpotPODToken_);
 
   cms::cuda::ScopedContextProduce ctx{iEvent.streamID()};
   BeamSpotCUDA bsDevice(ctx.stream());
