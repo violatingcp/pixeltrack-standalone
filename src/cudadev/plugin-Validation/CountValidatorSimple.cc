@@ -63,7 +63,7 @@ CountValidatorSimple::CountValidatorSimple(edm::ProductRegistry& reg)
     clusterToken_(reg.consumes<cms::cuda::Product<SiPixelClustersCUDA>>()),
     trackToken_(reg.consumes<PixelTrackHeterogeneous>()),
     vertexToken_(reg.consumes<ZVertexHeterogeneous>()),
-    suppressDigis_(true),
+    suppressDigis_(false),
     suppressTracks_(true){
   output_ = new uint8_t[7200000];
   //output_ = new uint32_t[5*150000+32768*36+1+2000+3*35000];
